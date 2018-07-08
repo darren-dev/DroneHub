@@ -1,60 +1,30 @@
-<h1>Assesment</h1>
-
-<h2>Scenario</h2>
-We need a drone delivery system that sends packages between two clients. (Client A = the sender, Client B = the receiver)
-You can generate 10 clients upon program startup but note that their locations will change on every order generation.
-
-<h3>Front End Requirements:</h3>
-* Basic UI map (1000 by 1000 units) square (Think of this UI as a graph with x and y coordinates and not in terms of google maps)
-* View order information
-* View Current Drone and state
-    * What order is he busy with
-    * Which step of the process is he busy with
+# Drone Port
+### An application that can move drones with packages from a port to a location.
 
 
-<h2>Orders</h2>
+__P0 Start Time: 07 July 14:06__  
+__P1 End Time: 08 July 18:40__
 
-<h3>The properties of an order are the following:</h3>
-Please note that these are just a guideline. Feel free to modify this as applicable.
 
-* id - Auto Increment Id managed within your application
-* client's name
-* client's location (latitude, longitude)
-* client's contact number
+## Features
 
-<h3>The properties of a drone are the following:</h3>
-Please note that these are just a guideline. Feel free to modify this as applicable.
+- Grid Generation (Recommended max 20x20)
+- Port Creation
+- Drone Creation
+- Order Creation
+- Automatic Drone Delivery
+- Query an order
+- ~~Relational Database~~
+- ~~Proper Git Commits~~
 
-* id - Auto increment ID
-* drone name
-* drone location (latitude, longitude)
 
-<h3>Drones</h3>
-There are 10 drones starting in the centre of the map.
+## Description
+The user starts off on an empty map, where they can set their port name, location on the grid, and the grid size. When finished, the user can click the `Create` button in order to generate the visual layout and setup the application.
 
-<h3>Allocation Rules</h3>
+- ## Create a new Drone
+    Clicking on `Add Drone` creates a new drone, and stores it into your current port. The drone will wait there until an order becomes available to deliver.
 
-Orders should be randomly placed every 30 seconds with randomized client locations.
+- ## Create a new Order
+    Clicking on `Add Order` creates a new order, and stores it in your current port. When a drone beclomes available, it will automatically take the order to the required client.
 
-So the rules for allocation are the following:
-* Order is allocated to a drone if a drone is not currently busy with another order.
-* Order is allocated to the closest available drone first and then the 2nd and so forth.
-* If no drones are available a retry policy should be followed.
-
-<h3>Process of an order</h3>
-
-* Allocate drone to Order.
-* Deliver from client A to client B.
-* Delivery time wil be calculated as follows.
-    * Assume a drone will always take 10 seconds to reach client A from wherever it currently is.
-    * Assume a drone moves with a velocity of 1 unit per second between clients.
-    
-
-<h3>Basic Tech Requirements</h3>
-
-* Any language is fine
-* An RDBMS Database
-* Code should be easy to understand
-* RESTful framework
-* Bonus if view can update components without refreshing page
-* Git practices will also be reviewed so make sure to make regular commits etc.
+A drone moves at a speed of 1 block per second. The drone will automatically calculate the best path between itself and the desired destination, and will move along the route until the delivery is completed. Once the delivery is completed, the drone will move back to the port to collect a new parcel.
