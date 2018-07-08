@@ -114,9 +114,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataType\VisualGridDisplayObject.cs" />
+    <Compile Include="ViewModels\VisualGridDisplayViewModel.cs" />
     <Compile Include="Interfaces\IDroneWithPosition.cs" />
-    <Compile Include="MainWindowCollection.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Singletons\Communicaiton.cs" />
     <Page Include="MainWindow.xaml">

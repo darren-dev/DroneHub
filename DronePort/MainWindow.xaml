@@ -28,31 +28,41 @@
     </Window.Resources>
 
     <StackPanel Margin="10">
-        <GroupBox x:Name="grpCreate" Height="auto" Header="Create">
-            <StackPanel HorizontalAlignment="Left" Name="Create">
-                <WrapPanel Margin="5">
-                    <TextBlock Text="Port Name:    "/>
-                    <TextBox Width="150" Text="{Binding PortName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                </WrapPanel>
-                <WrapPanel Margin="5">
-                    <TextBlock Text="Grid Width:    "/>
-                    <TextBox Width="150" Text="{Binding GridWidth, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                </WrapPanel>
-                <WrapPanel Margin="5">
-                    <TextBlock Text="Grid Height:     "/>
-                    <TextBox Width="150" Text="{Binding GridHeight, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                </WrapPanel>
-                <WrapPanel Margin="5">
-                    <TextBlock Text="Start positionY:     "/>
-                    <TextBox HorizontalAlignment="Stretch" Text="{Binding StartX, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                </WrapPanel>
-                <WrapPanel Margin="5">
-                    <TextBlock Text="Start positionpositionY:     "/>
-                    <TextBox HorizontalAlignment="Stretch" Text="{Binding StartY, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                </WrapPanel>
-                <Button x:Name="btnCreate" Click="btnCreate_Click" Content="Create" Margin="10" />
-            </StackPanel>
-        </GroupBox>
+        <StackPanel Orientation="Horizontal">
+            <GroupBox x:Name="grpCreate" Height="auto" Header="Create">
+                <StackPanel HorizontalAlignment="Left" Name="Create">
+                    <WrapPanel Margin="5">
+                        <TextBlock Text="Port Name:    "/>
+                        <TextBox Width="150" Text="{Binding PortName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="5">
+                        <TextBlock Text="Grid Width:    "/>
+                        <TextBox Width="150" Text="{Binding GridWidth, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="5">
+                        <TextBlock Text="Grid Height:     "/>
+                        <TextBox Width="150" Text="{Binding GridHeight, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="5">
+                        <TextBlock Text="Start positionY:     "/>
+                        <TextBox HorizontalAlignment="Stretch" Text="{Binding StartX, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="5">
+                        <TextBlock Text="Start positionpositionY:     "/>
+                        <TextBox HorizontalAlignment="Stretch" Text="{Binding StartY, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </WrapPanel>
+                    <Button x:Name="btnCreate" Click="btnCreate_Click" Content="Create" Margin="10" />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox  Height="auto" Header="Info" Width="auto">
+                <StackPanel>
+                    <ComboBox x:Name="cmboOrders" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}" DisplayMemberPath="ClientName" Width="120" Height="auto" Margin="0,0,0,158" SelectionChanged="cmboOrders_SelectionChanged" />
+                    <Label x:Name="lblClientName" Content="Client name: "/>
+                    <Label x:Name="lblOrderStatus" Content="Status: "/>
+                    <Label x:Name="lblTargetLocation" Content="X: - Y:"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
 
         <Label x:Name="lblTitle" ></Label>
 
@@ -62,9 +72,9 @@
         </Grid>
 
         <WrapPanel Margin="5">
-        <Button x:Name="btnAddDrone" Content="Add Drone" Margin="10" Click="btnAddDrone_Click" IsEnabled="False" >
+            <Button x:Name="btnAddDrone" Content="Add Drone" Margin="10" Click="btnAddDrone_Click" IsEnabled="False" >
             </Button>
             <Button x:Name="btnAddOrder" Content="Add Order" Margin="10" Click="btnAddOrder_Click" IsEnabled="False" />
-            </WrapPanel>
+        </WrapPanel>
     </StackPanel>
 </Window>

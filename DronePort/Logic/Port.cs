@@ -47,6 +47,7 @@ namespace DronePort.Logic
         public int AddOrder(IOrder order)
         {
             var insertedOrder = _orders.Add(order);
+            Communicaiton.Instance.AddOrderForReference(insertedOrder);
             
             Communicaiton.Instance.GetDisplayObjectAt(order.TargetX, order.TargetY).AsClient();
 

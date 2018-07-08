@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using DronePort.DataType;
+using DronePort.Interfaces;
 using DronePort.Logic;
 using DronePort.Singletons;
+using DronePort.ViewModels;
 
 namespace DronePort
 {
@@ -12,18 +13,19 @@ namespace DronePort
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly MainWindowCollection _mainWindowCollection;
+        private readonly MainWindowViewModel _mainWindowViewModel;
         private GridMap _gridMap;
         private Port _port;
-        private List<List<VisualGridDisplayObject>> _lstItemsSource;
+        private List<List<VisualGridDisplayViewModel>> _lstItemsSource;
         private Random _random;
+        private int _temp_number;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            _mainWindowCollection = new MainWindowCollection();
-            DataContext = _mainWindowCollection;
+            _mainWindowViewModel = new MainWindowViewModel();
+            DataContext = _mainWindowViewModel;
 
             _random = new Random();
 
@@ -36,7 +38,7 @@ namespace DronePort
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public VisualGridDisplayObject GetDisplayObjectAt(int x, int y)
+        public VisualGridDisplayViewModel GetDisplayObjectAt(int x, int y)
         {
             return _lstItemsSource[y][x];
         }
@@ -46,8 +48,8 @@ namespace DronePort
         /// </summary>
         private void CreatePort()
         {
-            _gridMap = new GridMap(_mainWindowCollection.GridWidth, _mainWindowCollection.GridHeight);
-            _port = new Port(_mainWindowCollection.PortName, _gridMap, _mainWindowCollection.StartX, _mainWindowCollection.StartY);
+            _gridMap = new GridMap(_mainWindowViewModel.GridWidth, _mainWindowViewModel.GridHeight);
+            _port = new Port(_mainWindowViewModel.PortName, _gridMap, _mainWindowViewModel.StartX, _mainWindowViewModel.StartY);
             
             Communicaiton.Instance.SetPort(_port);
         }
@@ -57,15 +59,15 @@ namespace DronePort
         /// </summary>
         private void CreateGrid()
         {
-            _lstItemsSource = new List<List<VisualGridDisplayObject>>();
+            _lstItemsSource = new List<List<VisualGridDisplayViewModel>>();
 
-            for (int i = 0; i < _mainWindowCollection.GridHeight; i++)
+            for (int i = 0; i < _mainWindowViewModel.GridHeight; i++)
             {
-                _lstItemsSource.Add(new List<VisualGridDisplayObject>());
+                _lstItemsSource.Add(new List<VisualGridDisplayViewModel>());
 
-                for (int j = 0; j < _mainWindowCollection.GridWidth; j++)
+                for (int j = 0; j < _mainWindowViewModel.GridWidth; j++)
                 {
-                    _lstItemsSource[i].Add(new VisualGridDisplayObject(OnDisplayObjectUpdate));
+                    _lstItemsSource[i].Add(new VisualGridDisplayViewModel(OnDisplayObjectUpdate));
                 }
             }
         }
@@ -75,7 +77,26 @@ namespace DronePort
         /// </summary>
         private void OnDisplayObjectUpdate()
         {
-            Dispatcher.Invoke(() => { lst.Items.Refresh(); });
+            Dispatcher.Invoke(() =>
+            {
+                lst.Items.Refresh();
+
+                UpdateOrderDisplayStatus();
+            });
+        }
+
+        /// <summary>
+        /// Updates the display status of the currently selected order
+        /// </summary>
+        private void UpdateOrderDisplayStatus()
+        {
+            if (_mainWindowViewModel.SelectedOrder != null)
+            {
+                var order = _port.GetOrderById(_mainWindowViewModel.SelectedOrder.Id);
+                lblClientName.Content = $"Client name: {order.ClientName}";
+                lblOrderStatus.Content = $"Status: {order.Status.ToString()}";
+                lblTargetLocation.Content = $"X: {order.TargetX} - Y:{order.TargetY}";
+            }
         }
 
         /// <summary>
@@ -85,6 +106,15 @@ namespace DronePort
         {
             lst.Items.Clear();
             lst.ItemsSource = _lstItemsSource;
+        }
+
+        /// <summary>
+        /// Adds a new order to reference from the front end
+        /// </summary>
+        /// <param name="order"></param>
+        public void AddOrder(IOrder order)
+        {
+            _mainWindowViewModel.Orders.Add(order);
         }
 
         /// <summary>
@@ -99,7 +129,7 @@ namespace DronePort
             BindToGridControl();
 
             grpCreate.Visibility = Visibility.Collapsed;
-            lblTitle.Content = _mainWindowCollection.GetTitle();
+            lblTitle.Content = _mainWindowViewModel.GetTitle();
             btnAddDrone.IsEnabled = true;
             btnAddOrder.IsEnabled = true;
 
@@ -123,9 +153,18 @@ namespace DronePort
         /// <param name="e"></param>
         private void btnAddOrder_Click(object sender, RoutedEventArgs e)
         {
-            var order = new Order("", "", _random.Next(0, _mainWindowCollection.GridWidth), _random.Next(0, _mainWindowCollection.GridHeight));
+            _temp_number++;
+            var clientName = $"Client_{_temp_number}";
+            var clientNumber = $"{_temp_number}{_temp_number}{_temp_number}{_temp_number}{_temp_number}{_temp_number}{_temp_number}";
+
+            var order = new Order(clientName, clientNumber, _random.Next(0, _mainWindowViewModel.GridWidth), _random.Next(0, _mainWindowViewModel.GridHeight));
 
             _port.AddOrder(order);
+        }
+
+        private void cmboOrders_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            UpdateOrderDisplayStatus();
         }
     }
 }

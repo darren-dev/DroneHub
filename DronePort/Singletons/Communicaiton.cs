@@ -1,6 +1,6 @@
 ﻿using System;
-using DronePort.DataType;
 using DronePort.Interfaces;
+using DronePort.ViewModels;
 
 namespace DronePort.Singletons
 {
@@ -64,7 +64,7 @@ namespace DronePort.Singletons
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public VisualGridDisplayObject GetDisplayObjectAt(int x, int y)
+        public VisualGridDisplayViewModel GetDisplayObjectAt(int x, int y)
         {
             return _mainWindow.GetDisplayObjectAt(x, y);
         }
@@ -97,6 +97,15 @@ namespace DronePort.Singletons
         public void SetDroneDocked(int droneId)
         {
             _currentPort.DroneDocked(droneId);
+        }
+
+        /// <summary>
+        /// Adds an order to reference from the UI
+        /// </summary>
+        /// <param name="order"></param>
+        public void AddOrderForReference(IOrder order)
+        {
+            _mainWindow.AddOrder(order);
         }
     }
 }
