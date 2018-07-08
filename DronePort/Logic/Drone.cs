@@ -66,7 +66,7 @@ namespace DronePort.Logic
 
             _timer = new Timer();
             _timer.Elapsed += OnElapsed;
-            _timer.Interval = 200; // In ms
+            _timer.Interval = 1000; // In ms
             _timer.Start();
         }
 
