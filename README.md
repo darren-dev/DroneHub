@@ -4,6 +4,7 @@
 
 __P0 Start Time: 07 July 14:06__  
 __P1 End Time: 08 July 18:40__
+__P2 End TIme: 08 July 20:01__
 
 
 ## Features
@@ -15,7 +16,7 @@ __P1 End Time: 08 July 18:40__
 - Automatic Drone Delivery
 - Query an order
 - ~~Relational Database~~
-- ~~Proper Git Commits~~
+- ~~Proper Git Commits*~~
 
 
 ## Description
