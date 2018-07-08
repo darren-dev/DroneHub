@@ -55,11 +55,19 @@ namespace DronePort.DataPersistence
             return _inMemoryPersistance.ContainsKey(id) ? _inMemoryPersistance[id] : default(T);
         }
 
+        /// <summary>
+        /// Get all the objects in storage
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<T> All()
         {
             return _inMemoryPersistance.Select(x => x.Value);
         }
 
+        /// <summary>
+        /// Increment the ID and return the new one
+        /// </summary>
+        /// <returns></returns>
         private int IncrementId()
         {
             _currentUsedId++;

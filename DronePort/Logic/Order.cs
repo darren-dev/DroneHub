@@ -7,16 +7,14 @@ namespace DronePort.Logic
     {
         private string _clientName;
         private string _clientNumber;
-
-        private int _startY;
-        private int _startX;
+        
         private OrderLocation _orderLocation;
 
         public int Id { get; private set; }
         public int TargetY { get; }
         public int TargetX { get; }
+        public OrderLocation Location { get; }
         public OrderStatus Status { get; private set; }
-        public OrderLocation Location { get; private set; }
 
         public Order(string clientName, string clientNumber, int endX, int endY)
         {

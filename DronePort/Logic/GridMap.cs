@@ -12,7 +12,14 @@ namespace DronePort.Logic
             _grid = new Grid(width, height);
         }
 
-
+        /// <summary>
+        /// Get a path list from one position to another
+        /// </summary>
+        /// <param name="currentX"></param>
+        /// <param name="currentY"></param>
+        /// <param name="targetX"></param>
+        /// <param name="targetY"></param>
+        /// <returns></returns>
         public IGridPosition[] GetPath(int currentX, int currentY, int targetX , int targetY)
         {
             // This is the issue with external libraries not using interfaces

@@ -2,6 +2,9 @@
 
 namespace DronePort.DataType
 {
+    /// <summary>
+    /// The object the visual grid references to display each block
+    /// </summary>
     public class VisualGridDisplayObject
     {
         private readonly Action _onUpdate;
